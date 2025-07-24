@@ -46,7 +46,25 @@ const Chat: React.FC = () => {
       }
 
       const data = await response.json();
-      const botMessage: Message = { id: uuidv4(), text: data.result, sender: 'bot' };
+      let botResponseText = '';
+
+      if (typeof data.result === 'string') {
+        botResponseText = data.result;
+      } else if (typeof data.result === 'object' && data.result !== null) {
+        // Look for a string property in the response object.
+        if (typeof data.result.response === 'string') {
+          botResponseText = data.result.response;
+        } else if (typeof data.result.text === 'string') {
+          botResponseText = data.result.text;
+        } else {
+          // Fallback to display the raw object for debugging.
+          botResponseText = "```json\n" + JSON.stringify(data.result, null, 2) + "\n```";
+        }
+      } else {
+        botResponseText = 'Maaf, saya menerima format respons yang tidak terduga.';
+      }
+      
+      const botMessage: Message = { id: uuidv4(), text: botResponseText, sender: 'bot' };
       setMessages(prevMessages => [...prevMessages, botMessage]);
 
     } catch (error) {
