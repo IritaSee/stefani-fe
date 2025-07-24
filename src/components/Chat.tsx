@@ -13,6 +13,7 @@ interface Message {
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversationId, setConversationId] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const newConversationId = uuidv4();
@@ -26,17 +27,35 @@ const Chat: React.FC = () => {
   const handleSendMessage = async (text: string) => {
     const userMessage: Message = { id: uuidv4(), text, sender: 'user' };
     setMessages(prevMessages => [...prevMessages, userMessage]);
+    setIsLoading(true);
 
-    console.log(`Sending message for conversation ID: ${conversationId}`);
-    // Simulate a bot response
-    // In a real application, you would make an API call to your backend here
-    // The backend would then call the LLM and return the response
-    const botResponse: Message = { id: uuidv4(), text: `Anda berkata: "${text}". Saya masih dalam pengembangan.`, sender: 'bot' };
-    
-    // Simulate a delay for the bot's response
-    setTimeout(() => {
-      setMessages(prevMessages => [...prevMessages, botResponse]);
-    }, 500);
+    try {
+      const response = await fetch('http://localhost:5001/api/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          question: text,
+          conversation_id: conversationId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const botMessage: Message = { id: uuidv4(), text: data.result, sender: 'bot' };
+      setMessages(prevMessages => [...prevMessages, botMessage]);
+
+    } catch (error) {
+      console.error("Could not fetch the bot's response:", error);
+      const errorMessage: Message = { id: uuidv4(), text: 'Maaf, saya sedang mengalami gangguan. Silakan coba lagi nanti.', sender: 'bot' };
+      setMessages(prevMessages => [...prevMessages, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -45,7 +64,7 @@ const Chat: React.FC = () => {
         <h2>Stefani</h2>
         <span>Asisten Pemrograman C</span>
       </div>
-      <ChatHistory messages={messages} />
+      <ChatHistory messages={messages} isLoading={isLoading} />
       <ChatInput onSendMessage={handleSendMessage} />
     </div>
   );

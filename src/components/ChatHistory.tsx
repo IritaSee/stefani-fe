@@ -10,9 +10,10 @@ interface Message {
 
 interface ChatHistoryProps {
   messages: Message[];
+  isLoading: boolean;
 }
 
-const ChatHistory: React.FC<ChatHistoryProps> = ({ messages }) => {
+const ChatHistory: React.FC<ChatHistoryProps> = ({ messages, isLoading }) => {
   return (
     <div className="chat-history">
       {messages.map((message) => (
@@ -26,6 +27,17 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ messages }) => {
             </div>
         </div>
       ))}
+      {isLoading && (
+        <div className="message-container message-bot">
+          <div className="message-bubble">
+            <div className="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
