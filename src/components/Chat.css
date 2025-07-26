@@ -1,5 +1,7 @@
 body {
   background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
 }
 
 .chat-container {
@@ -15,6 +17,16 @@ body {
   background-color: #ffffff;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .chat-container {
+    height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+  }
+}
+
 .chat-header {
   background-color: #61842f; /* Green from daskomlab */
   color: white;
@@ -23,14 +35,35 @@ body {
   text-align: center;
 }
 
+/* Mobile header adjustments */
+@media (max-width: 768px) {
+  .chat-header {
+    padding: 12px 15px;
+  }
+}
+
 .chat-header h2 {
   margin: 0;
   font-size: 1.5em;
 }
 
+/* Mobile header text size */
+@media (max-width: 768px) {
+  .chat-header h2 {
+    font-size: 1.3em;
+  }
+}
+
 .chat-header span {
   font-size: 0.9em;
   color: #d1d1d1;
+}
+
+/* Mobile header subtitle */
+@media (max-width: 768px) {
+  .chat-header span {
+    font-size: 0.8em;
+  }
 }
 
 .chat-history {
@@ -42,10 +75,25 @@ body {
   background-color: #f9f9f9;
 }
 
+/* Mobile chat history */
+@media (max-width: 768px) {
+  .chat-history {
+    padding: 15px 10px;
+  }
+}
+
 .message-container {
   display: flex;
   margin-bottom: 15px;
   max-width: 80%;
+}
+
+/* Mobile message container */
+@media (max-width: 768px) {
+  .message-container {
+    max-width: 90%;
+    margin-bottom: 12px;
+  }
 }
 
 .message-user {
@@ -61,6 +109,17 @@ body {
 .message-bubble {
   padding: 12px 18px;
   border-radius: 20px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Mobile message bubble */
+@media (max-width: 768px) {
+  .message-bubble {
+    padding: 10px 15px;
+    font-size: 0.9em;
+    border-radius: 18px;
+  }
 }
 
 .message-user .message-bubble {
@@ -78,6 +137,15 @@ body {
   padding: 15px;
   border-top: 1px solid #e0e0e0;
   background-color: #ffffff;
+  gap: 10px;
+}
+
+/* Mobile chat input */
+@media (max-width: 768px) {
+  .chat-input {
+    padding: 12px 10px;
+    gap: 8px;
+  }
 }
 
 .chat-input input {
@@ -87,6 +155,17 @@ body {
   border-radius: 25px;
   margin-right: 15px;
   font-size: 1em;
+  min-width: 0; /* Allows input to shrink below its default minimum */
+}
+
+/* Mobile input */
+@media (max-width: 768px) {
+  .chat-input input {
+    padding: 10px 15px;
+    margin-right: 0;
+    font-size: 0.9em;
+    border-radius: 20px;
+  }
 }
 
 .chat-input button {
@@ -98,10 +177,31 @@ body {
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+/* Mobile button */
+@media (max-width: 768px) {
+  .chat-input button {
+    padding: 10px 20px;
+    font-size: 0.9em;
+    border-radius: 20px;
+  }
 }
 
 .chat-input button:hover {
   background-color: #7cb342; /* Lighter green on hover */
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .chat-container {
+    max-width: 90%;
+  }
+  
+  .message-container {
+    max-width: 85%;
+  }
 }
 
 .typing-indicator {
