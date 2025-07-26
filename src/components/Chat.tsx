@@ -29,23 +29,42 @@ const Chat: React.FC = () => {
     setMessages(prevMessages => [...prevMessages, userMessage]);
     setIsLoading(true);
 
+    //debug
+    // console.log(`Sending message with conversation ID: ${conversationId}`);
+    // console.log(`Current conversation has ${messages.length} messages`);
+
     try {
+      const requestBody = {
+        question: text,
+        conversation_id: conversationId,
+        // Add conversation history for better context
+        conversation_history: messages.map(msg => ({
+          role: msg.sender === 'user' ? 'user' : 'assistant',
+          content: msg.text
+        }))
+      };
+
+      console.log('Request payload:', requestBody);
+
       const response = await fetch('http://localhost:5001/api/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          question: text,
-          conversation_id: conversationId,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+      
       const data = await response.json();
+      if (!data || !data.result) {
+        throw new Error('Invalid response format from the server');
+      }
+      //debug
+      // console.log('Backend response:', data);
+      
       let botResponseText = '';
 
       if (typeof data.result === 'string') {
@@ -69,7 +88,7 @@ const Chat: React.FC = () => {
 
     } catch (error) {
       console.error("Could not fetch the bot's response:", error);
-      const errorMessage: Message = { id: uuidv4(), text: 'Maaf, saya sedang mengalami gangguan. Silakan coba lagi nanti.', sender: 'bot' };
+      const errorMessage: Message = { id: uuidv4(), text: 'Maaf, Stefani gak bisa konek ke server, coba lagi nanti ya.', sender: 'bot' };
       setMessages(prevMessages => [...prevMessages, errorMessage]);
     } finally {
       setIsLoading(false);
