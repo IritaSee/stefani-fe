@@ -20,7 +20,7 @@ const Chat: React.FC = () => {
     setConversationId(newConversationId);
     console.log(`New conversation started with ID: ${newConversationId}`);
     setMessages([
-      { id: uuidv4(), text: 'Halo! Saya Stefani, asisten pemrograman C Anda. Ada yang bisa saya bantu hari ini?', sender: 'bot' }
+      { id: uuidv4(), text: 'Halo! aku Stefani, asisten alpro kamu! Ada yang bisa aku bantu hari ini?', sender: 'bot' }
     ]);
   }, []);
 
