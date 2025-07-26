@@ -1,69 +1,133 @@
-# React + TypeScript + Vite
+# Stefani - C Programming Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stefani adalah asisten pemrograman C yang dikembangkan oleh Daskom Laboratory. Aplikasi web ini membantu pengguna mempelajari bahasa pemrograman C melalui antarmuka chat yang interaktif.
 
-Currently, two official plugins are available:
+## Fitur
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🤖 Chat interaktif dengan asisten AI
+- 📱 Responsif untuk semua perangkat (desktop, tablet, mobile)
+- 🎨 Desain sesuai dengan branding daskomlab.com
+- 📝 Dukungan rendering Markdown untuk kode
+- 💬 Riwayat percakapan dengan ID unik
+- 🌐 Interface dalam Bahasa Indonesia
+- ⚙️ Konfigurasi environment untuk development dan production
 
-## Expanding the ESLint configuration
+## Teknologi
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: React + TypeScript + Vite
+- **Styling**: CSS dengan responsif design
+- **Markdown**: react-markdown untuk rendering kode
+- **Backend**: Flask API (terpisah)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Instalasi dan Menjalankan
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+1. **Clone repository**
+   ```bash
+   git clone <repository-url>
+   cd stefani-fe
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Setup environment variables**
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+   
+   # Edit .env file and update VITE_API_BASE_URL to match your backend
+   # For development: http://localhost:5001
+   # For production: https://your-production-backend.com
+   ```
+
+4. **Jalankan development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Build untuk production**
+   ```bash
+   npm run build
+   ```
+
+## Konfigurasi Backend
+
+### Development
+Pastikan backend Flask berjalan di URL yang sesuai dengan `VITE_API_BASE_URL` di file `.env` (default: `http://localhost:5001`).
+
+### Production
+Update file `.env.production` atau set environment variable `VITE_API_BASE_URL` dengan URL backend production Anda.
+
+Backend endpoint yang diperlukan: `/api/ask` yang menerima:
+```json
+{
+  "question": "string",
+  "conversation_id": "string",
+  "conversation_history": [
+    {
+      "role": "user|assistant",
+      "content": "string"
+    }
+  ]
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_API_BASE_URL` | Backend API base URL | `http://localhost:5001` |
+| `VITE_DEV_MODE` | Development mode flag | `true` |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Struktur Project
+
 ```
+src/
+├── components/
+│   ├── Chat.tsx           # Komponen utama chat
+│   ├── ChatHistory.tsx    # Menampilkan riwayat pesan
+│   ├── ChatInput.tsx      # Input untuk mengetik pesan
+│   └── Chat.css          # Styling untuk komponen chat
+├── App.tsx               # Komponen root aplikasi
+├── App.css              # Styling utama aplikasi
+├── index.css            # Global styles
+└── main.tsx             # Entry point aplikasi
+```
+
+## Responsiveness
+
+Aplikasi ini sepenuhnya responsif dengan breakpoint:
+- **Mobile**: ≤ 768px
+- **Tablet**: 769px - 1024px  
+- **Desktop**: > 1024px
+
+## Deployment
+
+### Development
+```bash
+npm run dev
+```
+
+### Production Build
+```bash
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Environment Files
+- `.env` - Local development
+- `.env.production` - Production deployment
+- `.env.example` - Template file
+
+## Kontribusi
+
+Dikembangkan oleh Daskom Laboratory, Telkom University.
+
+## License
+MIT
+© 2025 Daskom Laboratory

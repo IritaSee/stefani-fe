@@ -46,7 +46,7 @@ const Chat: React.FC = () => {
 
       console.log('Request payload:', requestBody);
 
-      const response = await fetch('http://localhost:5001/api/ask', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
