@@ -31,7 +31,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
         value={inputValue}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
-        placeholder="Ketik pesan Anda..."
+        placeholder="sok atuh tanyain aja..."
       />
       <button onClick={handleSendClick}>Kirim</button>
     </div>

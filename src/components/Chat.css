@@ -11,7 +11,7 @@ body {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #61842f;
   border-radius: 8px;
   overflow: hidden;
   background-color: #ffffff;
@@ -20,7 +20,9 @@ body {
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .chat-container {
-    height: 100vh;
+    min-height: 100dvh;
+    height: 80vh; 
+    /* padding-bottom: 3dvh; */
     max-width: 100%;
     border-radius: 0;
     border: none;

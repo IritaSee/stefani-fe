@@ -20,7 +20,7 @@ const Chat: React.FC = () => {
     setConversationId(newConversationId);
     console.log(`New conversation started with ID: ${newConversationId}`);
     setMessages([
-      { id: uuidv4(), text: 'Halo! aku Stefani, asisten alpro kamu! Ada yang bisa aku bantu hari ini?', sender: 'bot' }
+      { id: uuidv4(), text: 'Halo! Stefani heree, asisten alpro kamu! Ada yang bisa aku bantu hari ini?', sender: 'bot' }
     ]);
   }, []);
 
@@ -80,7 +80,7 @@ const Chat: React.FC = () => {
           botResponseText = "```json\n" + JSON.stringify(data.result, null, 2) + "\n```";
         }
       } else {
-        botResponseText = 'Maaf, saya menerima format respons yang tidak terduga.';
+        botResponseText = 'Maaf, aku nerima format respons yang tidak terduga... parah sih bang AND ngodingnya ini gimana bang';
       }
       
       const botMessage: Message = { id: uuidv4(), text: botResponseText, sender: 'bot' };
@@ -88,7 +88,7 @@ const Chat: React.FC = () => {
 
     } catch (error) {
       console.error("Could not fetch the bot's response:", error);
-      const errorMessage: Message = { id: uuidv4(), text: 'Maaf, Stefani gak bisa konek ke server, coba lagi nanti ya.', sender: 'bot' };
+      const errorMessage: Message = { id: uuidv4(), text: 'Maaf, Fani gak bisa konek ke server, coba lagi nanti ya.', sender: 'bot' };
       setMessages(prevMessages => [...prevMessages, errorMessage]);
     } finally {
       setIsLoading(false);
